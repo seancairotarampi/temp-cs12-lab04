@@ -17,27 +17,6 @@ class ConnectTacToeModel:
                     [".", ".", ".", ".", ".", ".", "."]
                     ]
 
-    def choose_cell(self, row: int, col: int) -> bool:
-        if self._grid[row][col] != ".":
-            return False
-        else:
-            if self._current_player == Player.P1:
-                self._grid[row][col] = "A"
-                self._current_player = Player.P2
-                return True
-            else:
-                self._grid[row][col] = "B"
-                self._current_player = Player.P1
-                return True
-
-    def get_owner(self, row: int, col: int) -> Player | None:
-        if self._grid[row][col] == "A":
-            return Player.P1
-        elif self._grid[row][col] == "B":
-            return Player.P2
-        else:
-            return None
-
     @property
     def current_player(self) -> Player:
         return self._current_player
@@ -91,3 +70,32 @@ class ConnectTacToeModel:
     @property
     def grid(self) -> list[list[str]]:
         return self._grid
+    
+    @property
+    def p1_wins(self) -> bool:
+        return self._p1_wins
+    
+    @property
+    def p2_wins(self) -> bool:
+        return self._p2_wins
+    
+    def choose_cell(self, row: int, col: int) -> bool:
+        if self._grid[row][col] != ".":
+            return False
+        else:
+            if self._current_player == Player.P1:
+                self._grid[row][col] = "A"
+                self._current_player = Player.P2
+                return True
+            else:
+                self._grid[row][col] = "B"
+                self._current_player = Player.P1
+                return True
+    
+    def get_owner(self, row: int, col: int) -> Player | None:
+        if self._grid[row][col] == "A":
+            return Player.P1
+        elif self._grid[row][col] == "B":
+            return Player.P2
+        else:
+            return None
