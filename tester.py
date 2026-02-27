@@ -5,4 +5,4 @@ from model import ConnectTacToeModel
 
 
 def make(win_condition_type: WinConditionType, token_physics_type: TokenPhysicsType) -> ConnectTacToeModel:
-    ...
+    return ConnectTacToeModel(win_condition_type, token_physics_type)

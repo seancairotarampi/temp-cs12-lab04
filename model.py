@@ -48,7 +48,7 @@ class ConnectTacToeModel:
 
     @property
     def is_game_done(self) -> bool:
-        if self._p1_wins == True or self._p2_wins == True:
+        if self._p1_wins or self._p2_wins:
             return True
         
         # check for empty cells
