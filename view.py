@@ -54,6 +54,7 @@ class ConnectTacToeController:
                     print("\n")
                 else:
                     break
+            model.winner
             confirm = False
             view.display_view(model.grid)
             print(f"Current player: {model.current_player}")
@@ -65,7 +66,7 @@ class ConnectTacToeController:
                     print("\n")
                 else:
                     break
-            print(model.is_game_done)
+            model.winner
 
         view.display_view(model.grid)
         if model.p1_wins != model.p2_wins:
