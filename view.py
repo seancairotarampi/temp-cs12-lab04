@@ -4,13 +4,11 @@ from typing import List
 from common_types import Player
 
 class ConnectTacToeView:
-    def display_view(self, current_player: Player, grid: List[List[str]], ) -> None:
+    def display_view(self, grid: List[List[str]], ) -> None:
         row: List[str]
         for row in grid:
             print(row)
         print("\n")
-        
-        print(f"Current player: {current_player}")
 
     def ask_for_coords(self, current_player: Player) -> tuple[int, int]:
         r: int = -1
@@ -41,13 +39,32 @@ class ConnectTacToeController:
             r: int = -1
             c: int = -1
             confirm: bool = False
-            view.display_view(model.current_player, model.grid)
+            view.display_view(model.grid)
+            print(f"Current player: {model.current_player}")
             while not confirm:
                 (r, c) = view.ask_for_coords(model.current_player)
                 confirm = model.choose_cell(r, c)
                 if confirm == False:
                     print("\nCell occupied or invalid. Try again.")
                     print("\n")
+            
+            view.display_view(model.grid)
+            print(f"Current player: {model.current_player}")
+            while not confirm:
+                (r, c) = view.ask_for_coords(model.current_player)
+                confirm = model.choose_cell(r, c)
+                if confirm == False:
+                    print("\nCell occupied or invalid. Try again.")
+                    print("\n")
+
+        view.display_view(model.grid)
+        if model.p1_wins != model.p2_wins:
+            print(f"{'P1' if model.winner == Player.P1 else 'P2'} wins!")
+        elif model.p1_wins and model.p2_wins:
+            print("Both players win. ")
+        else:
+            print("No one wins. ")
+        print("Game over. ")
             
         
 

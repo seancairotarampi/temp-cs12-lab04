@@ -25,6 +25,7 @@ def main() -> None:
     m: ConnectTacToeModel = ConnectTacToeModel(wc, tp)
     v: ConnectTacToeView = ConnectTacToeView()
     c: ConnectTacToeController = ConnectTacToeController(m, v)
+    c.run()
 
 if __name__ == "__main__":
     main()
