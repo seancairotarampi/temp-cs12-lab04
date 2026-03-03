@@ -1,3 +1,5 @@
+# pyright: strict
+
 from argparse import ArgumentParser
 from model import ConnectTacToeModel
 from view import ConnectTacToeView, ConnectTacToeController

@@ -1,4 +1,5 @@
 # pyright: strict
+
 from common_types import Player, WinConditionType, TokenPhysicsType
 
 class ConnectTacToeModel:
@@ -114,3 +115,46 @@ class ConnectTacToeModel:
             return Player.P2
         else:
             return None
+
+class TicTacToeWinCondition:
+    def get_winner(self, grid: list[list[str]]) -> Player | None:
+        p1_wins: bool = False
+        p2_wins: bool = False
+        # row check
+        for i in range(6):
+            if grid[i] == ["A", "A", "A", "A", "A", "A", "A"]:
+                p1_wins = True
+            elif grid[i] == ["B", "B", "B", "B", "B", "B", "B"]:
+                p2_wins = True
+            
+        #column check
+        rotated_grid = [list(row) for row in zip(*grid[::-1])]
+
+        for i in range(7):
+            if rotated_grid[i] == ["A", "A", "A", "A", "A", "A"]:
+                p1_wins = True
+            elif rotated_grid[i] == ["B", "B", "B", "B", "B", "B"]:
+                p2_wins = True
+        
+        if p1_wins == True and p2_wins == False:
+            return Player.P1
+        elif p1_wins == False and p2_wins == True:
+            return Player.P2
+        else:
+            return None
+
+class StrongGravity:
+    def apply(self, grid: list[list[str]], row: int, col: int) -> None:
+        for i in reversed(range(6)):
+            if grid[i][col] == ".":
+                grid[i][col] = grid[row][col]
+                grid[row][col] = "."
+                break
+
+class WeakGravity:
+    def apply(self, grid: list[list[str]], row: int, col: int) -> None:
+        for i in reversed(range(5)):
+            for j in range(7):
+                if grid[i][j] != "." and grid[i+1][j] == ".":
+                    grid[i+1][j] = grid[i][j]
+                    grid[i][j] = "."
