@@ -97,6 +97,13 @@ class ConnectTacToeModel:
                         self._grid[i][col] = self._grid[row][col]
                         self._grid[row][col] = "."
                         break
+            
+            if self._token_physics == TokenPhysicsType.WEAK_GRAVITY:
+                for i in reversed(range(5)):
+                    for j in range(7):
+                        if self._grid[i][j] != "." and self._grid[i+1][j] == ".":
+                            self._grid[i+1][j] = self._grid[i][j]
+                            self._grid[i][j] = "."
 
             return True
     
