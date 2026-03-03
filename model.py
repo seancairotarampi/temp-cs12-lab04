@@ -116,7 +116,7 @@ class ConnectTacToeModel:
         else:
             return None
 
-class TicTacToeWinCondition:
+class TicTacToe:
     def get_winner(self, grid: list[list[str]]) -> Player | None:
         p1_wins: bool = False
         p2_wins: bool = False
@@ -142,6 +142,14 @@ class TicTacToeWinCondition:
             return Player.P2
         else:
             return None
+
+class NotConnectFour:
+    def get_winner(self, grid: list[list[str]]) -> Player | None:
+        ...
+
+class Floating:
+    def apply(self, grid: list[list[str]], row: int, col: int) -> None:
+        pass
 
 class StrongGravity:
     def apply(self, grid: list[list[str]], row: int, col: int) -> None:
