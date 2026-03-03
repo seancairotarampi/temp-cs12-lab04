@@ -9,11 +9,11 @@ class ConnectTacToeModel:
         self._win_condition = create_win_condition(win_condition)
         self._token_physics = create_token_physics(token_physics)
         self._grid = [
-                    ["A", ".", ".", ".", ".", ".", "."],
-                    ["A", ".", ".", ".", ".", ".", "."],
-                    ["A", ".", ".", ".", ".", ".", "."],
-                    ["A", ".", ".", ".", ".", ".", "."],
-                    ["A", ".", ".", ".", ".", ".", "."],
+                    [".", ".", ".", ".", ".", ".", "."],
+                    [".", ".", ".", ".", ".", ".", "."],
+                    [".", ".", ".", ".", ".", ".", "."],
+                    [".", ".", ".", ".", ".", ".", "."],
+                    [".", ".", ".", ".", ".", ".", "."],
                     [".", ".", ".", ".", ".", ".", "."]
                     ]
 
@@ -61,10 +61,12 @@ class ConnectTacToeModel:
     
     @property
     def p1_wins(self) -> bool:
+        self._win_condition.update_player_state(self._grid)
         return self._win_condition.p1_wins
     
     @property
     def p2_wins(self) -> bool:
+        self._win_condition.update_player_state(self._grid)
         return self._win_condition.p2_wins
     
     def choose_cell(self, row: int, col: int) -> bool:
