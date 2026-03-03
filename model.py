@@ -117,13 +117,17 @@ class TicTacToe:
                 self._p2_wins = True
 
 class NotConnectFour:
+    def __init__(self):
+        self._p1_wins: bool = False
+        self._p2_wins: bool = False
+
     @property
     def p1_wins(self) -> bool:
-        ...
+        return self._p1_wins
     
     @property
     def p2_wins(self) -> bool:
-        ...
+        return self._p2_wins
 
     def update_player_state(self, grid: list[list[str]]) -> None:
         ...
