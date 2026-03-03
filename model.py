@@ -26,11 +26,10 @@ class ConnectTacToeModel:
         if self._win_condition == WinConditionType.TIC_TAC_TOE:
             # row check
             for i in range(6):
-                for j in range(5):
-                    if self._grid[i][j] == "A" and self._grid[i][j+1] == "A" and self._grid[i][j+2] == "A":
-                        self._p1_wins = True
-                    elif self._grid[i][j] == "B" and self._grid[i][j+1] == "B" and self._grid[i][j+2] == "B":
-                        self._p2_wins = True
+                if self._grid[i] == ["A", "A", "A", "A", "A", "A", "A"]:
+                    self._p1_wins = True
+                elif self._grid[i] == ["B", "B", "B", "B", "B", "B", "B"]:
+                    self._p2_wins = True
             
             #column check
             for i in range(4):
