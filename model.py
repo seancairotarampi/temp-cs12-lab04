@@ -32,12 +32,14 @@ class ConnectTacToeModel:
                     self._p2_wins = True
             
             #column check
-            for i in range(4):
-                for j in range(7):
-                    if self._grid[i][j] == "A" and self._grid[i+1][j] == "A" and self._grid[i+2][j] == "A":
-                        self._p1_wins = True
-                    elif self._grid[i][j] == "B" and self._grid[i+1][j] == "B" and self._grid[i+2][j] == "B":
-                        self._p2_wins = True
+            rotated_grid = [list(row) for row in zip(*self._grid[::-1])]
+
+            for i in range(7):
+                if rotated_grid[i] == ["A", "A", "A", "A", "A", "A"]:
+                    self._p1_wins = True
+                elif rotated_grid[i] == ["B", "B", "B", "B", "B", "B"]:
+                    self._p2_wins = True
+
         if self._p1_wins == True and self._p2_wins == False:
             return Player.P1
         elif self._p1_wins == False and self._p2_wins == True:
@@ -85,11 +87,18 @@ class ConnectTacToeModel:
             if self._current_player == Player.P1:
                 self._grid[row][col] = "A"
                 self._current_player = Player.P2
-                return True
             else:
                 self._grid[row][col] = "B"
                 self._current_player = Player.P1
-                return True
+            
+            if self._token_physics == TokenPhysicsType.STRONG_GRAVITY:
+                for i in reversed(range(6)):
+                    if self._grid[i][col] == ".":
+                        self._grid[i][col] = self._grid[row][col]
+                        self._grid[row][col] = "."
+                        break
+
+            return True
     
     def get_owner(self, row: int, col: int) -> Player | None:
         if self._grid[row][col] == "A":
