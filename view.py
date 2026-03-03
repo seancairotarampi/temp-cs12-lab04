@@ -28,7 +28,17 @@ class ConnectTacToeView:
                 c = int(input(f"Enter the column where you will put {cp_symbol} [1-7]: "))
             except ValueError or TypeError:
                 print("Invalid input. ")
+        print("\n")
         return (r - 1, c - 1)
+    
+    def display_winner(self, p1_wins: bool, p2_wins: bool, winner: Player | None):
+        if p1_wins != p2_wins:
+            print(f"{'Player 1' if winner == Player.P1 else 'Player 2'} wins!")
+        elif p1_wins and p2_wins:
+            print("Both players win.")
+        else:
+            print("No one wins.")
+        print("Game over.")
 
 class ConnectTacToeController:
     def __init__(self, model: ConnectTacToeModel, view: ConnectTacToeView) -> None:
@@ -40,25 +50,9 @@ class ConnectTacToeController:
         view = self._view
 
         while not model.is_game_done:
-            r: int
-            c: int
-            temp: tuple[int, int]
             confirm: bool = False
             view.display_view(model.grid)
-            print(f"Current player: {model.current_player}")
-            while not confirm:
-                temp = view.ask_for_coords(model.current_player)
-                confirm = model.choose_cell(*temp)
-                if not confirm:
-                    print("\nCell occupied or invalid. Try again.")
-                    print("\n")
-                else:
-                    break
-            if model.winner:
-                break
-            confirm = False
-            view.display_view(model.grid)
-            print(f"Current player: {model.current_player}")
+            print(f"Current player: {"Player 1" if model.current_player == Player.P1 else "Player 2"}")
             while not confirm:
                 (r, c) = view.ask_for_coords(model.current_player)
                 confirm = model.choose_cell(r, c)
@@ -67,17 +61,9 @@ class ConnectTacToeController:
                     print("\n")
                 else:
                     break
-            if model.winner:
-                break
 
         view.display_view(model.grid)
-        if model.p1_wins != model.p2_wins:
-            print(f"{'P1' if model.winner == Player.P1 else 'P2'} wins!")
-        elif model.p1_wins and model.p2_wins:
-            print("Both players win. ")
-        else:
-            print("No one wins. ")
-        print("Game over. ")
+        view.display_winner(model.p1_wins, model.p2_wins, model.winner)
             
         
 
