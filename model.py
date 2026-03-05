@@ -1,5 +1,6 @@
 # pyright: strict
 
+from collections import deque
 from common_types import Player, WinConditionType, TokenPhysicsType
 from protocols import WinCondition, TokenPhysics
 
@@ -130,7 +131,38 @@ class NotConnectFour:
         return self._p2_wins
 
     def update_player_state(self, grid: list[list[str]]) -> None:
-        ...
+        visited = [[False for _ in range(7)] for _ in range(6)]
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        for r in range(6):
+            for c in range(7):
+
+                token = grid[r][c]
+
+                if token == "." or visited[r][c]:
+                    continue
+
+                queue = deque([(r, c)])
+                visited[r][c] = True
+                size = 0
+
+                while queue:
+                    cr, cc = queue.popleft()
+                    size += 1
+
+                    for dr, dc in directions:
+                        nr = cr + dr
+                        nc = cc + dc
+
+                        if (0 <= nr < 6 and 0 <= nc < 7 and not visited[nr][nc] and grid[nr][nc] == token):
+                            visited[nr][nc] = True
+                            queue.append((nr, nc))
+
+                if size >= 4:
+                    if token == "A":
+                        self._p1_wins = True
+                    else:
+                        self._p2_wins = True
 
 class Floating:
     def apply(self, grid: list[list[str]], row: int, col: int) -> None:
@@ -152,7 +184,7 @@ class WeakGravity:
                     grid[i+1][j] = grid[i][j]
                     grid[i][j] = "."
 
-#sets win condition
+#sets win condition in the Model Initializer
 def create_win_condition(win_condition: WinConditionType) -> WinCondition:
     if win_condition == WinConditionType.TIC_TAC_TOE:
         return TicTacToe()
@@ -160,7 +192,7 @@ def create_win_condition(win_condition: WinConditionType) -> WinCondition:
     if win_condition == WinConditionType.NOT_CONNECT_FOUR:
         return NotConnectFour()
 
-#sets token physics
+#sets token physics in the Model Initializer
 def create_token_physics(token_physics: TokenPhysicsType) -> TokenPhysics:
     if token_physics == TokenPhysicsType.FLOATING:
         return Floating()
