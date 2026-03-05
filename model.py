@@ -170,7 +170,7 @@ class Floating:
 
 class StrongGravity:
     def apply(self, grid: list[list[str]], row: int, col: int) -> None:
-        for i in reversed(range(6)):
+        for i in reversed(range(row + 1, 6)):
             if grid[i][col] == ".":
                 grid[i][col] = grid[row][col]
                 grid[row][col] = "."
@@ -186,19 +186,19 @@ class WeakGravity:
 
 #sets win condition in the Model Initializer
 def create_win_condition(win_condition: WinConditionType) -> WinCondition:
-    if win_condition == WinConditionType.TIC_TAC_TOE:
-        return TicTacToe()
-    
     if win_condition == WinConditionType.NOT_CONNECT_FOUR:
         return NotConnectFour()
+    
+    else:
+        return TicTacToe() # default
 
 #sets token physics in the Model Initializer
 def create_token_physics(token_physics: TokenPhysicsType) -> TokenPhysics:
-    if token_physics == TokenPhysicsType.FLOATING:
-        return Floating()
-
     if token_physics == TokenPhysicsType.STRONG_GRAVITY:
         return StrongGravity()
 
-    if token_physics == TokenPhysicsType.WEAK_GRAVITY:
+    elif token_physics == TokenPhysicsType.WEAK_GRAVITY:
         return WeakGravity()
+    
+    else:
+        return Floating() # default
